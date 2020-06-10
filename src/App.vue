@@ -11,7 +11,7 @@
           <md-input v-model="numberuser"></md-input>
         </md-field>
         <div>
-          <md-button class="md-raised md-primary" v-on:click="search">Buscar</md-button>
+          <md-button class="md-raised md-primary" v-on:click="search">Buscar número en secuencia</md-button>
         </div>
       </md-card-content>
       <md-toolbar v-show="answered">
@@ -42,15 +42,19 @@ export default {
       }
     },
     search: function() {
-      let check = Number(this.numberuser);
-      if (!Number.isInteger(check)) {
-        alert("Su número debe ser entero");
-      } else if (check > 100000000) {
-        alert("Su número debe ser inferior a 100,000,000");
+      if (this.numberuser != 0) {
+        let check = Number(this.numberuser);
+        if (!Number.isInteger(check)) {
+          alert("Su número debe ser entero");
+        } else if (check > 100000000) {
+          alert("Su número debe ser inferior a 100,000,000");
+        } else {
+          this.createFibonacci();
+          this.checkNumber(check);
+          this.answered = true;
+        }
       } else {
-        this.createFibonacci();
-        this.checkNumber(check);
-        this.answered = true;
+        alert("Debe ser un número superior o igual a 1");
       }
     },
     checkNumber: function(check) {
@@ -58,7 +62,7 @@ export default {
       this.fibonumbers.forEach(function(value, idx, arr) {
         if (arr[idx - 1] != undefined) {
           if (check > arr[idx - 1] && check <= arr[idx]) {
-            resp = arr[idx-1];
+            resp = arr[idx - 1];
             return arr[idx];
           }
         }
